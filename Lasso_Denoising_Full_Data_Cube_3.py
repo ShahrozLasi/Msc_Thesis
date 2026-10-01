@@ -508,7 +508,7 @@ if __name__ == "__main__":
     # Load data
     # ============================================================
 
-    data_path = (r'F:\JIMM2\MWF_invivo\Python_V.1.7\synthetic data cube\Spatially_Variably_with_Rician_noise\Spatially_Variable_Rician_Noise_SNR300_1000.npy')
+    data_path = (r'Spatially_Variable_Rician_Noise_SNR300_1000.npy')
 
     data_cube = np.load(data_path)
 
@@ -565,9 +565,7 @@ if __name__ == "__main__":
     base_name = os.path.splitext(os.path.basename(data_path))[0]
 
     save_path = (
-    rf'\\msg-filer6\scratch_360_days\JIMM2\MWF_invivo\Python_V.1.7'
-    rf'\synthetic data cube\Lasso_Denoiser'
-    rf'\{base_name}_Lasso_lam{lambda_rician}.npy')
+    Lasso_Denoiser{base_name}_Lasso_lam{lambda_rician}.npy')
 
     # Uncomment this line when you are happy with the result.
     np.save(save_path, denoised)
