@@ -2,75 +2,74 @@
 """
 Created on Mon 20 14:13:34 2026
 
-@author: shahjaha
+@author: shahjahan
 """
 import numpy as np
 import time
 import os
 # from scipy.special import i0e, i1e
-from Tikhonov_Denoising_Version_2_faster_batch_processing import rician_tikhonov_denoise_batch
 
 # ============================================================
 # Rician + Tikhonov batch denoiser
 # ============================================================
-# def rician_tikhonov_denoise_batch(Y_batch, lam, sigma_batch,max_iter=200, tau=0.0002):
+def rician_tikhonov_denoise_batch(Y_batch, lam, sigma_batch,max_iter=200, tau=0.0002):
 
-#     eps = 1e-12
+     eps = 1e-12
 
-#     Y_batch = np.asarray(Y_batch, dtype=np.float32)
-#     X = np.maximum(Y_batch.copy(), 1e-6)
+     Y_batch = np.asarray(Y_batch, dtype=np.float32)
+     X = np.maximum(Y_batch.copy(), 1e-6)
 
-#     sigma_batch = np.asarray(sigma_batch, dtype=np.float32).reshape(-1, 1)
-#     sigma_batch = np.maximum(sigma_batch, 1e-6)
+     sigma_batch = np.asarray(sigma_batch, dtype=np.float32).reshape(-1, 1)
+     sigma_batch = np.maximum(sigma_batch, 1e-6)
 
-#     s2 = sigma_batch ** 2
+     s2 = sigma_batch ** 2
 
-#     for _ in range(max_iter):
+     for _ in range(max_iter):
 
-#         # ----------------------------------------------------
-#         # Rician likelihood gradient
-#         # ----------------------------------------------------
-#         z = (X * Y_batch) / (s2 + eps)
-#         z = np.clip(z, 1e-10, 700)
+         # ----------------------------------------------------
+         # Rician likelihood gradient
+         # ----------------------------------------------------
+         z = (X * Y_batch) / (s2 + eps)
+         z = np.clip(z, 1e-10, 700)
 
-#         I0 = i0e(z)
-#         I1 = i1e(z)
+         I0 = i0e(z)
+         I1 = i1e(z)
 
-#         ratio = I1 / (I0 + eps)
+         ratio = I1 / (I0 + eps)
 
-#         grad_data = (X / s2) - (Y_batch / s2) * ratio
+         grad_data = (X / s2) - (Y_batch / s2) * ratio
 
-#         # ----------------------------------------------------
-#         # Tikhonov regularization gradient
-#         # ----------------------------------------------------
-#         grad_reg = np.zeros_like(X)
+         # ----------------------------------------------------
+         # Tikhonov regularization gradient
+         # ----------------------------------------------------
+         grad_reg = np.zeros_like(X)
 
-#         grad_reg[:, 1:-1] = 2*X[:,1:-1] - X[:,:-2] - X[:,2:]
-#         grad_reg[:, 0]    = X[:,0] - X[:,1]
-#         grad_reg[:, -1]   = X[:,-1] - X[:,-2]
+         grad_reg[:, 1:-1] = 2*X[:,1:-1] - X[:,:-2] - X[:,2:]
+         grad_reg[:, 0]    = X[:,0] - X[:,1]
+         grad_reg[:, -1]   = X[:,-1] - X[:,-2]
 
-#         # ----------------------------------------------------
-#         # Normalize per voxel
-#         # ----------------------------------------------------
-#         grad_data /= (np.mean(np.abs(grad_data), axis=1, keepdims=True) + eps)
-#         grad_reg  /= (np.mean(np.abs(grad_reg), axis=1, keepdims=True) + eps)
+         # ----------------------------------------------------
+         # Normalize per voxel
+         # ----------------------------------------------------
+         grad_data /= (np.mean(np.abs(grad_data), axis=1, keepdims=True) + eps)
+         grad_reg  /= (np.mean(np.abs(grad_reg), axis=1, keepdims=True) + eps)
 
-#         grad = grad_data + lam * grad_reg
+         grad = grad_data + lam * grad_reg
 
-#         grad_norm = np.linalg.norm(grad, axis=1, keepdims=True)
+         grad_norm = np.linalg.norm(grad, axis=1, keepdims=True)
 
-#         X_new = X - tau * grad / (grad_norm + eps)
-#         X_new = np.maximum(X_new, 0)
+         X_new = X - tau * grad / (grad_norm + eps)
+         X_new = np.maximum(X_new, 0)
 
-#         # convergence
-#         rel = np.linalg.norm(X_new - X, axis=1) / (np.linalg.norm(X, axis=1) + eps)
+         # convergence
+         rel = np.linalg.norm(X_new - X, axis=1) / (np.linalg.norm(X, axis=1) + eps)
 
-#         X = X_new
+         X = X_new
 
-#         if np.all(rel < 1e-6):
-#             break
+         if np.all(rel < 1e-6):
+             break
 
-#     return X
+     return X
 
 
 # ============================================================
@@ -152,7 +151,7 @@ if __name__ == "__main__":
     # --------------------------------------------------------
     # Load cube
     # --------------------------------------------------------
-    data_path = "F:\JIMM2\MWF_invivo\Python_V.1.7\synthetic data cube\Spatially_Variably_with_Rician_noise\Spatially_Variable_Rician_Noise_SNR100_1000.npy"
+    data_path = "Spatially_Variable_Rician_Noise_SNR100_1000.npy"
     data_cube = np.load(data_path)
     base_name = os.path.splitext(os.path.basename(data_path))[0]
 
@@ -178,7 +177,7 @@ if __name__ == "__main__":
     # --------------------------------------------------------
     # Save denoised cube
     # --------------------------------------------------------
-    save_path = rf"\\msg-filer6\scratch_360_days\JIMM2\MWF_invivo\Python_V.1.7\synthetic data cube\Tikhonov_Denoising/{base_name}_Tikhonov_lam{lam}_tau{tau}.npy"
+    save_path = rf"Tikhonov_Denoising/{base_name}_Tikhonov_lam{lam}_tau{tau}.npy"
     np.save(save_path, denoised)
     print("Saved:", save_path)
     
