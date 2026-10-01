@@ -2,7 +2,7 @@
 """
 Created on Mon Aug 17 10:09:38 2026
 
-@author: Shahjaha
+@author: Shahjahan
 """
 
 import numpy as np
@@ -509,9 +509,7 @@ if __name__ == "__main__":
     # Input file
     # ======================================================
 
-    noisy_file_path = (r"F:\JIMM2\MWF_invivo\Python_V.1.7"
-                       r"\synthetic data cube\Spatially_Variably_with_Rician_noise"
-                       r"\Spatially_Variable_Rician_Noise_SNR100_1000.npy")
+    noisy_file_path = (r"\Spatially_Variable_Rician_Noise_SNR100.npy")
 
     # ======================================================
     # Load noisy data
