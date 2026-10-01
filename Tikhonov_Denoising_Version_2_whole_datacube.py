@@ -2,7 +2,7 @@
 """
 Created on Mon 20 14:13:34 2026
 
-@author: shahjahan
+@author: Shahjahan
 """
 import numpy as np
 import time
