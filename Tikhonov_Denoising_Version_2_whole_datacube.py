@@ -7,7 +7,7 @@ Created on Mon 20 14:13:34 2026
 import numpy as np
 import time
 import os
-# from scipy.special import i0e, i1e
+from scipy.special import i0e, i1e
 
 # ============================================================
 # Rician + Tikhonov batch denoiser
